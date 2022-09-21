@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- Author: Markus Schattauer -->
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="rgb(0,20,60)">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Online-Zulassungsstelle</title>
+
+</head>
+
+<script>
+</script>
+
+<style>
+    .containers {
+        width: 1350px;
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 0px 0px;
+        overflow: auto;
+        background-color: rgba(255, 255, 255, 0.00);
+        min-height: 100%;
+    }
+    .navi{
+        font-size: 3rem;
+        color:black;
+        padding: 0px 10px;
+    }
+    .navileiste{
+        background-color: lightgrey;
+    }
+    .navi-small{
+        font-size: 1rem;
+        color:black;
+        float:right;
+        padding: 10px 10px;
+    }
+    .navi-search{
+        float:right;
+        margin-top:30px;
+    }
+    .navi-userbutton{
+        float:right;
+        border: solid white 2px;
+        border-radius: 5px;
+        background-color: white;
+        margin-top:10px;
+        margin-right: 30px;
+        margin-left: 30px;
+    }
+    .navi-userbutton:hover{
+        cursor:pointer;
+    }
+    .footer{
+        width: 100%;
+        float:none;
+        min-height: 200px;
+        background-color: lightgray;
+    }
+    .blockcontent{
+        overflow: auto;
+        float:none;
+    }
+    {% block style %}{% endblock %}
+</style>
+
+<body>
+    <div class="main-background" >
+        <div class="containers">
+            <header class="navileiste">
+                <div class="navi-div-a">
+                    <a href="{% url 'home' %}" class="navi">Digitale Zulassungsstelle</a>
+                    
+                    <a href="" class="navi-small">English</a>
+                    <button OnClick="" class="navi-userbutton">{% load static %}
+                        <img src={% static "main/icon.jpg" %} width=50px  alt="Nutzerkonto"></button>
+                    <input type="submit" value="Suchen" class="navi-search">
+                    <input type="text" class="navi-search" placeholder="Suche">
+                </div>
+            </header>
+
+            <div class="Inhalt">
+                <div class="blockcontent"> 
+                    
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="footer">
+                <a> Diese Seite ist ein Angebot keiner Zulassungsstelle.</a>
+
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>

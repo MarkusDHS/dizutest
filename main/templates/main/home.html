@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+
+{% block style %}
+
+.dlbox{
+    border:solid black 2px;
+    border-radius:5px;
+    margin: 10px 10px;
+    float:left;
+    padding: 10px 10px;
+}
+{% endblock style %}
+
+{% block content %}
+
+<h1> Startseite </h1>
+
+<h3>Dienstleistungen - Online Verfahren</h3>
+
+{% for dl in dls %}
+    <div OnClick="location.href='/dl/Neuzulassung'" class="dlbox">
+        <h4> {{dl.name}} </h4>
+        <p> {{ dl.desc}}</p>
+
+    </div>
+{% endfor %}
+
+{% endblock content %}
