@@ -61,11 +61,17 @@
         width: 100%;
         float:none;
         min-height: 200px;
-        background-color: red;
+        background-color: lightgrey;
     }
     .blockcontent{
         overflow: auto;
         float:none;
+    }
+    .footer-container{
+        width: 1350px;
+        max-width: 90%;
+        margin: 0 auto;
+        padding-top: 40px;
     }
     {% block style %}{% endblock %}
 </style>
@@ -93,7 +99,13 @@
             </div>
 
             <div class="footer">
-                <a> Diese Seite ist ein Angebot keiner Zulassungsstelle.</a>
+                <div class="footer-container">
+                <a href=""> Impressum</a> <br>
+                <a href=""> Datenschutzerklärung</a><br>
+                <a href=""> Link</a><br>
+                <a href=""> Link</a><br>
+                <a href=""> Link</a><br>
+            </div>
 
             </div>
         </div>
