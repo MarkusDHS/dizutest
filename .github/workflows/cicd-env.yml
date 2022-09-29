@@ -93,7 +93,7 @@ jobs:
         run: |
           cd ~
           git config --global user.name "MarkusDHS"
-          git clone https://github.com/MarkusDHS/dizuenvironment
+          git clone https://github.com/MarkusDHS/dizuenvironmenttest
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
@@ -108,7 +108,7 @@ jobs:
           ghpassword: ${{ secrets.GH_PASSWORD }}
         run: |
           cd ~/dizuenvironment
-          git remote add dizuenvironment https://MarkusDHS:$ghpassword@github.com/MarkusDHS/dizuenvironment
+          git remote add dizuenvironment https://MarkusDHS:$ghpassword@github.com/MarkusDHS/dizuenvironmenttest
           git add .
           git commit -m "New container Image for commit ${{ github.sha }}"
       - name: pushing the changes
