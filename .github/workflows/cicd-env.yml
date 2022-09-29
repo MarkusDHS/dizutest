@@ -107,7 +107,7 @@ jobs:
         env: 
           ghpassword: ${{ secrets.GH_PASSWORD }}
         run: |
-          cd ~/dizuenvironment
+          cd ~/dizuenvironmenttest
           git remote add dizuenvironmenttest https://MarkusDHS:$ghpassword@github.com/MarkusDHS/dizuenvironmenttest
           git add .
           git commit -m "New container Image for commit ${{ github.sha }}"
