@@ -100,7 +100,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Edit Yaml
         run: |
-          cd ~/dizuenvironment/
+          cd ~/dizuenvironmenttest/
           ls
           python editYaml.py ./overlays/test/appdeploy.yaml markusdhs/testdizu:${{ github.sha }}
       - name: pushing the changes
@@ -108,10 +108,10 @@ jobs:
           ghpassword: ${{ secrets.GH_PASSWORD }}
         run: |
           cd ~/dizuenvironment
-          git remote add dizuenvironment https://MarkusDHS:$ghpassword@github.com/MarkusDHS/dizuenvironmenttest
+          git remote add dizuenvironmenttest https://MarkusDHS:$ghpassword@github.com/MarkusDHS/dizuenvironmenttest
           git add .
           git commit -m "New container Image for commit ${{ github.sha }}"
       - name: pushing the changes
         run: |
-          cd ~/dizuenvironment
-          git push dizuenvironment master
+          cd ~/dizuenvironmenttest
+          git push dizuenvironmenttest master
