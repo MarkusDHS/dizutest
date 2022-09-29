@@ -102,7 +102,7 @@ jobs:
         run: |
           cd ~/dizuenvironment/
           ls
-          python editYaml.py markusdhs/proddizu:${{ github.sha }}
+          python editYaml.py ./overlays/prod/appdeploy.yaml markusdhs/proddizu:${{ github.sha }}
       - name: pushing the changes
         env: 
           ghpassword: ${{ secrets.GH_PASSWORD }}
