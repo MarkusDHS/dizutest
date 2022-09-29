@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [ 'dev' ]
+    
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: [3.8]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Tests
+      run: |
+        python manage.py test
+  
+  build-delivery:
+    runs-on: ubuntu-20.04
+    needs: [test]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile -t dizu
+    - name: Login to Dockerhub
+      env: 
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: docker login --username markusdhs --password "$password"
+    - name: Tag the Docker image
+      run: docker tag dizu markusdhs/dizu:${{ github.sha }}
+    - name: Push the Docker image
+      run: docker push markusdhs/dizu:${{ github.sha }}
+  
+  trivy:
+    runs-on: ubuntu-20.04
+    needs: [build-delivery]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        with:
+          image-ref: 'docker.io/markusdhs/dizu:${{ github.sha }}'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          #exit-code: 1
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  proddelivery:
+    runs-on: ubuntu-20.04
+    needs: [trivy]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Pull the Docker image
+        run: docker pull markusdhs/dizu:${{ github.sha }}
+      - name: Login to Dockerhub
+        env: 
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: docker login --username markusdhs --password "$password"
+      - name: Tag the Docker image
+        run: docker tag markusdhs/dizu:${{ github.sha }} markusdhs/testdizu:${{ github.sha }}
+      - name: Push the Docker image
+        run: docker push markusdhs/testdizu:${{ github.sha }}
+
+  initializedeploy:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: [3.8]
+    needs: [proddelivery]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Clone git Repo
+        run: |
+          cd ~
+          git config --global user.name "MarkusDHS"
+          git clone https://github.com/MarkusDHS/dizuenvironment
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Edit Yaml
+        run: |
+          cd ~/dizuenvironment/
+          ls
+          python editYaml.py ./overlays/test/appdeploy.yaml markusdhs/testdizu:${{ github.sha }}
+      - name: pushing the changes
+        env: 
+          ghpassword: ${{ secrets.GH_PASSWORD }}
+        run: |
+          cd ~/dizuenvironment
+          git remote add dizuenvironment https://MarkusDHS:$ghpassword@github.com/MarkusDHS/dizuenvironment
+          git add .
+          git commit -m "New container Image for commit ${{ github.sha }}"
+      - name: pushing the changes
+        run: |
+          cd ~/dizuenvironment
+          git push dizuenvironment master
