@@ -1,40 +1,229 @@
-{% extends "main/base.html" %}
-
-{% block style %}
-
-.dlbox{
-    border:solid black 2px;
-    border-radius:5px;
-    margin: 10px 10px;
-    float:none;
-    padding: 10px 10px;
-    width: 90%;
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Department of Transportation</title>
+</head>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #F3F3F3;
+  color: #222222;
+  margin: 0;
+  padding: 0;
 }
-.dlbox:hover{
-    cursor:pointer;
+
+/* Wrapper styles */
+.wrapper {
+  max-width: 80%;
+  margin: 0 auto;
 }
-{% endblock style %}
 
-{% block content %}
+/* Header styles */
+header {
+  background-color: #CCCCCC;
+  padding: 20px;
+}
 
-<h1> Startseite </h1>
+h1 {
+  margin: 0;
+  color: #222222;
+}
 
-<h3>Dienstleistungen - Online Verfahren</h3>
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
-{% for dl in dls %}
-    <div OnClick="location.href='/dl/Neuzulassung'" class="dlbox">
-        <h4> {{dl.name}} </h4>
-        <p> {{ dl.desc}}</p>
+nav li {
+  display: inline;
+  margin-right: 10px;
+}
 
+nav a {
+  text-decoration: none;
+  color: #222222;
+}
+
+/* Main styles */
+main {
+  background-color: #E8E8E8;
+  padding: 20px;
+}
+
+h2 {
+  color: #222222;
+}
+
+.service {
+  background-color: #F3F3F3;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.service h3 {
+  margin-top: 0;
+  color: #222222;
+}
+
+.button {
+  display: inline-block;
+  background-color: #CCCCCC;
+  color: #222222;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #999999;
+}
+
+/* Services Table styles */
+.services-table {
+  width: 100%;
+  border-spacing: 20px;
+}
+
+.service-cell {
+  width: 50%;
+  vertical-align: top;
+}
+
+/* Government Offices styles */
+#government {
+  background-color: #E8E8E8;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#government ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  color: #222222;
+}
+
+/* Contact styles */
+#contact {
+  background-color: #E8E8E8;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Footer styles */
+footer {
+  background-color: #CCCCCC;
+  padding: 20px;
+  color: #222222;
+  text-align: center;
+}
+
+</style>
+<body>
+    <div class="wrapper">
+      <header>
+        <h1>Department of Transportation</h1>
+        <nav>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="account-link"><a href="#account">My Account</a></li>
+            <li class="language-link"><a href="#language">Language</a></li>
+          </ul>
+        </nav>
+      </header>
+  
+      <main>
+        <section id="services">
+          <h2>Our Services</h2>
+          <table class="services-table">
+            <tr>
+              <td>
+                <div class="service">
+                  <h3>Driver's License Renewal</h3>
+                  <p>Renew your driver's license online:</p>
+                  <a href="#" class="button">Renew Now</a>
+                </div>
+              </td>
+              <td>
+                <div class="service">
+                  <h3>Vehicle Registration</h3>
+                  <p>Register your vehicle online:</p>
+                  <a href="#" class="button">Register Now</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="service">
+                  <h3>Traffic Safety</h3>
+                  <p>Access traffic safety resources online:</p>
+                  <a href="#" class="button">Learn More</a>
+                </div>
+              </td>
+              <td>
+                <div class="service">
+                  <h3>Road Maintenance</h3>
+                  <p>Report road maintenance issues online:</p>
+                  <a href="#" class="button">Report Now</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="service">
+                  <h3>Public Transportation</h3>
+                  <p>Plan your public transportation route:</p>
+                  <a href="#" class="button">Plan Now</a>
+                </div>
+              </td>
+              <td>
+                <div class="service">
+                  <h3>Transportation Permits</h3>
+                  <p>Apply for transportation permits online:</p>
+                  <a href="#" class="button">Apply Now</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </section>
+  
+        <section id="about">
+          <h2>About Us</h2>
+          <p>The Department of Transportation is responsible for ensuring safe and efficient transportation systems. We strive to provide excellent service to our community.</p>
+        </section>
+
+        <section id="government">
+            <h2>Government Offices</h2>
+            <p>Visit our government offices to access additional services and assistance:</p>
+            <ul>
+              <li>Transportation Licensing Office</li>
+              <li>Vehicle Registration Office</li>
+              <li>Traffic Safety Department</li>
+              <li>Road Maintenance Office</li>
+            </ul>
+            <p>Our knowledgeable staff at these offices can help you with various transportation-related matters, including:</p>
+            <ul>
+              <li>Issuing driver's licenses and ID cards</li>
+              <li>Processing vehicle registrations and permits</li>
+              <li>Providing information on traffic safety regulations</li>
+              <li>Handling road maintenance and repair requests</li>
+            </ul>
+          </section>
+  
+        <section id="contact">
+          <h2>Contact Us</h2>
+          <p>If you have any questions or need assistance, please feel free to contact us:</p>
+          <p>Email: info@transportation.gov</p>
+          <p>Phone: 123-456-7890</p>
+        </section>
+      </main>
+  
+      <footer>
+        <p>&copy; 2023 Department of Transportation. All rights reserved.</p>
+      </footer>
     </div>
-{% endfor %}
-
-<div> 
-    <h4> Nicht fündig geworden?</h4>
-    <p>Kontaktieren Sie uns!</p>
-    <h5> 0800 0815 1234 5678 </h5>
-    <p> 123 456 7890 123</p>
-    <h5> anfrage@digitale-zulassung.de</h5>
-</div>
-
-{% endblock content %}
+  </body>
+  </html>
