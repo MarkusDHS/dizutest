@@ -6,7 +6,7 @@ from .models import Dl
 def home(request):
     dls=Dl.objects.all()
     params={"dls":dls}
-    return render(request,"main/home.html",params)
+    return render(request,"main/home.html")
 
 def dl(request,dl):
     dlobj=Dl.objects.get(name=dl)
